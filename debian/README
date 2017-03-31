@@ -1,0 +1,7 @@
+The Debian Package android-hwcomposer-hwmodule-drm
+--------------------------------------------------
+
+This package contains libraries built from Android
+platform/external/drm_hwcomposer.
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Fri, 31 Mar 2017 13:29:28 +0800
