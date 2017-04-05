@@ -655,13 +655,13 @@ int DrmDisplayCompositor::CommitFrame(DrmDisplayComposition *display_comp,
     if (comp_plane.type() != DrmCompositionPlane::Type::kDisable) {
       if (source_layers.size() > 1) {
         ALOGE("Can't handle more than one source layer sz=%zu type=%d",
-              source_layers.size(), comp_plane.type());
+              source_layers.size(), (int32_t)comp_plane.type());
         continue;
       }
 
       if (source_layers.empty() || source_layers.front() >= layers.size()) {
         ALOGE("Source layer index %zu out of bounds %zu type=%d",
-              source_layers.front(), layers.size(), comp_plane.type());
+              source_layers.front(), layers.size(), (int32_t)comp_plane.type());
         break;
       }
       DrmHwcLayer &layer = layers[source_layers.front()];
