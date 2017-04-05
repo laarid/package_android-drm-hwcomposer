@@ -20,13 +20,12 @@
 #include "platform.h"
 #include "platformdrmgeneric.h"
 
-#include <drm/drm_fourcc.h>
+#include <drm_fourcc.h>
 #include <xf86drm.h>
 #include <xf86drmMode.h>
 
 #include <cutils/log.h>
 #include <gralloc_drm.h>
-#include <gralloc_drm_priv.h>
 #include <gralloc_drm_handle.h>
 #include <hardware/gralloc.h>
 

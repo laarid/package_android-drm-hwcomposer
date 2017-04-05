@@ -21,6 +21,7 @@
 
 #include <linux/netlink.h>
 #include <sys/socket.h>
+#include <assert.h>
 
 #include <cutils/log.h>
 #include <xf86drm.h>

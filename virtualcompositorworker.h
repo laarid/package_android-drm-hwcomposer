@@ -20,6 +20,7 @@
 #include "drmhwcomposer.h"
 #include "worker.h"
 
+#include <memory>
 #include <queue>
 
 namespace android {

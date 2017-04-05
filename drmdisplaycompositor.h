@@ -24,6 +24,7 @@
 #include "separate_rects.h"
 
 #include <pthread.h>
+#include <bitset>
 #include <memory>
 #include <queue>
 #include <sstream>

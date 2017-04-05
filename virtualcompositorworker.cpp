@@ -26,7 +26,7 @@
 #include <hardware/hardware.h>
 #include <hardware/hwcomposer.h>
 #include <sched.h>
-#include <sw_sync.h>
+#include <sync/sw_sync.h>
 #include <sync/sync.h>
 
 namespace android {

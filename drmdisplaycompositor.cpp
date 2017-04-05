@@ -27,7 +27,7 @@
 #include <vector>
 
 #include <cutils/log.h>
-#include <drm/drm_mode.h>
+#include <drm_mode.h>
 #include <sync/sync.h>
 #include <utils/Trace.h>
 

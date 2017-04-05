@@ -43,7 +43,7 @@
 #include <cutils/properties.h>
 #include <hardware/hardware.h>
 #include <hardware/hwcomposer.h>
-#include <sw_sync.h>
+#include <sync/sw_sync.h>
 #include <sync/sync.h>
 #include <utils/Trace.h>
 

@@ -23,6 +23,7 @@
 #include <hardware/hardware.h>
 #include <hardware/hwcomposer.h>
 
+#include <algorithm>
 #include <map>
 #include <vector>
 
