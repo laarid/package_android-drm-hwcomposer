@@ -21,7 +21,11 @@
 #include "platform.h"
 #include "platformdrmgeneric.h"
 
+#if defined(__ANDROID__)
 #include <stdatomic.h>
+#else
+#include <atomic>
+#endif
 
 #include <hardware/gralloc.h>
 
@@ -41,7 +45,7 @@ class NvImporter : public Importer {
   typedef struct NvBuffer {
     NvImporter *importer;
     hwc_drm_bo_t bo;
-    atomic_int ref;
+    std::atomic_int ref;
   } NvBuffer_t;
 
   static void NvGrallocRelease(void *nv_buffer);

@@ -21,7 +21,11 @@
 #include "platformnv.h"
 
 #include <cinttypes>
+#if defined(__ANDROID__)
 #include <stdatomic.h>
+#else
+#include <atomic>
+#endif
 #include <xf86drm.h>
 #include <xf86drmMode.h>
 
@@ -72,7 +76,7 @@ int NvImporter::ImportBuffer(buffer_handle_t handle, hwc_drm_bo_t *bo) {
   memset(bo, 0, sizeof(hwc_drm_bo_t));
   NvBuffer_t *buf = GrallocGetNvBuffer(handle);
   if (buf) {
-    atomic_fetch_add(&buf->ref, 1);
+    std::atomic_fetch_add(&buf->ref, 1);
     *bo = buf->bo;
     return 0;
   }
@@ -88,7 +92,7 @@ int NvImporter::ImportBuffer(buffer_handle_t handle, hwc_drm_bo_t *bo) {
   // We initialize the reference count to 2 since NvGralloc is still using this
   // buffer (will be cleared in the NvGrallocRelease), and the other
   // reference is for HWC (this ImportBuffer call).
-  atomic_init(&buf->ref, 2);
+  std::atomic_init(&buf->ref, 2);
 
   int ret = gralloc_->perform(gralloc_, GRALLOC_MODULE_PERFORM_DRM_IMPORT,
                               drm_->fd(), handle, &buf->bo);
@@ -128,7 +132,7 @@ int NvImporter::ReleaseBuffer(hwc_drm_bo_t *bo) {
     ALOGE("Freeing bo %" PRIu32 ", buf is NULL!", bo->fb_id);
     return 0;
   }
-  if (atomic_fetch_sub(&buf->ref, 1) > 1)
+  if (std::atomic_fetch_sub(&buf->ref, 1) > 1)
     return 0;
 
   ReleaseBufferImpl(bo);
