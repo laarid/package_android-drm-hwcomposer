@@ -33,6 +33,50 @@
 
 namespace android {
 
+#if defined(__GNUC__)
+// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=60168
+#define AUTO_GL_TYPE(name, type, zero, deleter) \
+  struct name##Pointer {                        \
+    type _v;                                    \
+    name##Pointer() : _v(zero) {}               \
+    name##Pointer(const type v) : _v(v) {}      \
+    operator type() const { return _v; }        \
+  };                                            \
+  struct name##Deleter {                        \
+    typedef name##Pointer pointer;              \
+                                                \
+    void operator()(pointer ptr) const {        \
+      type& p = ptr._v;                         \
+      if (p != zero) {                          \
+        deleter;                                \
+      }                                         \
+    }                                           \
+  };                                            \
+  } /* namespace android */                     \
+  namespace std {                               \
+    inline bool                                 \
+    operator !=(const android::name##Pointer& x,\
+                const std::nullptr_t& y)        \
+               noexcept                         \
+    {                                           \
+      return x._v != zero;                      \
+    }                                           \
+  } /* namespace std */                         \
+  inline bool                                   \
+  operator ==(const android::name##Pointer& x,  \
+              type y)                           \
+  {                                             \
+    return x._v == y;                           \
+  }                                             \
+  inline bool                                   \
+  operator !=(const android::name##Pointer& x,  \
+              type y)                           \
+  {                                             \
+    return x._v != y;                           \
+  }                                             \
+  namespace android {                           \
+  typedef std::unique_ptr<name##Pointer, name##Deleter> name;
+#else
 #define AUTO_GL_TYPE(name, type, zero, deleter) \
   struct name##Deleter {                        \
     typedef type pointer;                       \
@@ -44,6 +88,7 @@ namespace android {
     }                                           \
   };                                            \
   typedef std::unique_ptr<type, name##Deleter> name;
+#endif
 
 AUTO_GL_TYPE(AutoGLFramebuffer, GLuint, 0, glDeleteFramebuffers(1, &p))
 AUTO_GL_TYPE(AutoGLBuffer, GLuint, 0, glDeleteBuffers(1, &p))
