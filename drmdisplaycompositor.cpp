@@ -693,6 +693,17 @@ int DrmDisplayCompositor::CommitFrame(DrmDisplayComposition *display_comp,
         alpha = layer.alpha;
 
       rotation = 0;
+#if !defined(DRM_REFLECT_X)
+// DRM_REFLECT_{0,90,180,270,X,Y} are defined as bits in kernel source
+// drm/drm_blend.h, but they are not exported in any uapi headers.
+// See http://lxr.free-electrons.com/source/include/drm/drm_blend.h
+#define DRM_ROTATE_0   0
+#define DRM_ROTATE_90  1
+#define DRM_ROTATE_180 2
+#define DRM_ROTATE_270 3
+#define DRM_REFLECT_X  4
+#define DRM_REFLECT_Y  5
+#endif
       if (layer.transform & DrmHwcTransform::kFlipH)
         rotation |= 1 << DRM_REFLECT_X;
       if (layer.transform & DrmHwcTransform::kFlipV)
