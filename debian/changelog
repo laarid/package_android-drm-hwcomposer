@@ -1,3 +1,9 @@
+android-drm-hwcomposer (0.0.1+b1) stretch; urgency=low
+
+  * debian: setup alternatives
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Sat, 17 Jun 2017 11:02:56 +0800
+
 android-drm-hwcomposer (0.0.1) stretch; urgency=low
 
   * initial build
